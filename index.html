@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast@1.4.0/dist/css/iziToast.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/izitoast@1.4.0/dist/js/iziToast.min.js"></script>
+  <title>Popup Buttons and Features</title>
+</head>
+<body>
+
+<div class="container mt-5">
+  <!-- Heading and Description -->
+  <h2 class="text-center">Popup Buttons and Features</h2>
+  <p class="text-center">Click the buttons below to experience different Popup functionalities:</p>
+
+  <!-- Buttons for Different izitoast Notifications -->
+  <button class="btn btn-success" id="successButton">Success Notification</button>
+  <button class="btn btn-danger" id="errorButton">Error Notification</button>
+  <button class="btn btn-primary" id="infoButton">Info Notification</button>
+  <button class="btn btn-warning" id="confirmButton">Confirm Action</button>
+
+  <!-- Footer with Creator Info -->
+  <div class="mt-4 text-center">
+    <p>Created by <a href="https://megatirfan.com" target="_blank">Megat Irfan</a></p>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const successButton = document.getElementById('successButton');
+  const errorButton = document.getElementById('errorButton');
+  const infoButton = document.getElementById('infoButton');
+  const confirmButton = document.getElementById('confirmButton');
+
+  // Success Button Click Event
+  successButton.addEventListener('click', function() {
+    iziToast.success({
+      title: 'Success!',
+      message: 'This is a success notification.',
+    });
+  });
+
+  // Error Button Click Event
+  errorButton.addEventListener('click', function() {
+    iziToast.error({
+      title: 'Error!',
+      message: 'An error occurred.',
+    });
+  });
+
+  // Info Button Click Event
+  infoButton.addEventListener('click', function() {
+    iziToast.info({
+      title: 'Information',
+      message: 'This is an informational notification.',
+    });
+  });
+
+  // Confirm Button Click Event
+  confirmButton.addEventListener('click', function() {
+    iziToast.question({
+      timeout: false,
+      close: false,
+      overlay: true,
+      displayMode: 'once',
+      id: 'question',
+      zindex: 999,
+      title: 'Confirm Action',
+      message: 'Are you sure you want to proceed?',
+      position: 'center',
+      buttons: [
+        ['<button><b>YES</b></button>', function (instance, toast) {
+          instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+          // You can add your action here for confirmed action
+          iziToast.success({
+            title: 'Action Confirmed',
+            message: 'The action has been completed.',
+          });
+        }, true],
+        ['<button>NO</button>', function (instance, toast) {
+          instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+        }],
+      ],
+      onClosing: function(instance, toast, closedBy){
+        console.info('Closing | closedBy: ' + closedBy);
+      },
+      onClosed: function(instance, toast, closedBy){
+        console.info('Closed | closedBy: ' + closedBy);
+      }
+    });
+  });
+});
+</script>
+
+</body>
+</html>
